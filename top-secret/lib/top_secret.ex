@@ -30,11 +30,10 @@ defmodule TopSecret do
   def decode_secret_message_part(ast, acc), do: {ast, acc}
 
   def decode_secret_message(string) do
-    ast = Code.string_to_quoted(string)
-
-    {_, acc} =
-      Macro.traverse(
-        ast,
+    {_, accumulator} =
+      string
+      |> to_ast()
+      |> Macro.traverse(
         [],
         fn node, acc ->
           decode_secret_message_part(node, acc)
@@ -44,6 +43,6 @@ defmodule TopSecret do
         end
       )
 
-    acc |> Enum.reverse() |> Enum.join("")
+    accumulator |> Enum.reverse() |> Enum.join("")
   end
 end
