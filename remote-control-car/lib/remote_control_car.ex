@@ -2,9 +2,7 @@ defmodule RemoteControlCar do
   @enforce_keys [:nickname]
   defstruct [:nickname, battery_percentage: 100, distance_driven_in_meters: 0]
 
-  def new(), do: %RemoteControlCar{nickname: "none"}
-
-  def new(nickname), do: %RemoteControlCar{nickname: nickname}
+  def new(nickname \\ "none"), do: %RemoteControlCar{nickname: nickname}
 
   def display_distance(remote_car) when remote_car.__struct__ == RemoteControlCar do
     %{distance_driven_in_meters: distance, battery_percentage: _, nickname: _} = remote_car
